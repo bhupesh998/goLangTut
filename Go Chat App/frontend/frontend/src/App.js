@@ -1,0 +1,46 @@
+import React, { Component } from 'react'
+import Header from './components/Header/Header'
+import ChatHistory from './components/ChatHistory/ChatHistory'
+import ChatInput from './components/ChatInput/ChatInput'
+import './App.css'
+import { connect , sendMsg} from './api'
+
+
+
+export default class App extends Component {
+
+    constructor(props){
+        super(props)
+        this.state = {
+            chatHistory: []
+        }
+    }
+
+    componentDidMount(){
+        connect((msg)=>{
+            console.log("New Message" , msg);
+            this.setState(prevState=>({
+                chatHistory : [...prevState.chatHistory , msg]
+            }))
+            console.log("state", this.state);
+        });
+    }
+
+    send(event) {
+      if (event.keyCode === 13) {
+        sendMsg(event.target.value);
+        event.target.value = "";
+      }
+    }
+
+  render() {
+    return (
+      <div className='App'>
+        <Header/>
+        <ChatHistory chatHistory = {this.state.chatHistory }/>
+        <ChatInput  send={this.send} />
+      </div>
+    )
+  }
+}
+

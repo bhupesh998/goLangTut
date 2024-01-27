@@ -1,0 +1,12 @@
+{
+	"Name": "Mru",
+	"Age": 23,
+	"Contact": "34567990",
+	"Company": "RbK llp",
+	"Address": {
+		"City": "Satara",
+		"State": "Maharashtra",
+		"Country": "India",
+		"Pincode": 481010
+	}
+}

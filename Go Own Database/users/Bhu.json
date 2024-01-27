@@ -1,0 +1,12 @@
+{
+	"Name": "Bhu",
+	"Age": 25,
+	"Contact": "34568090",
+	"Company": "Mai ltd",
+	"Address": {
+		"City": "Indore",
+		"State": "Madhya Pradesh",
+		"Country": "India",
+		"Pincode": 450010
+	}
+}

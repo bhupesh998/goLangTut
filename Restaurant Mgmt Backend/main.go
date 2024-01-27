@@ -1,11 +1,10 @@
 package main
 
 import (
-	"go-resturant-management/database"
-	"go-resturant-management/middleware"
-	"go-resturant-management/routes"
 	"os"
-
+	"go-resturant-management/database"
+	//middleware "go-resturant-management/middleware"
+	routes "go-resturant-management/routes"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -22,7 +21,9 @@ func main(){
 	router := gin.New()
 	router.Use(gin.Logger())
 	routes.UserRoutes(router)
-	router.Use(middleware.Authentication())
+	
+	
+	//router.Use(middleware.Authentication())
 
 
 	routes.FoodRoutes(router)

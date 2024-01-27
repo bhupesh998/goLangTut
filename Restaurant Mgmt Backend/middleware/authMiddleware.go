@@ -2,8 +2,8 @@ package middleware
 
 import (
 
-	//helper "go-resturant-management/helpers"
-	"go-resturant-management/helpers"
+	helper "go-resturant-management/helpers"
+	
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -20,7 +20,7 @@ func Authentication() gin.HandlerFunc {
 			return 
 		}
 
-		claims , err := helpers.ValidateToken(clientToken)
+		claims , err := helper.ValidateToken(clientToken)
 
 		if err!= "" {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Invalid Token"})

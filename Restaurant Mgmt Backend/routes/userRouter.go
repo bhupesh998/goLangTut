@@ -4,7 +4,7 @@ import (
 	"go-resturant-management/controllers"
 
 	"github.com/gin-gonic/gin"
-	_ "go.mongodb.org/mongo-driver/mongo"
+	_"go.mongodb.org/mongo-driver/mongo"
 )
 
 func UserRoutes(incomingRoutes *gin.Engine){

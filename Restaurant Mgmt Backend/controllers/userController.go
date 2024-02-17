@@ -41,15 +41,18 @@ func GetUsers() gin.HandlerFunc {
 		startIndex, err = strconv.Atoi(c.Query("startIndex"))
 
 		matchStage := bson.D{{"$match", bson.D{{}}}}
+		groupStage := bson.D{{"$group", bson.D{
+			{"_id", bson.D{{"_id", "null"}}},
+			{"total_count", bson.D{{"$sum", 1}}},
+			{"data", bson.D{{"$push", "$$ROOT"}}}}}}
 		projectStage := bson.D{
 			{"$project", bson.D{
 				{"_id", 0},
 				{"total_count", 1},
-				{"user_items", bson.D{{"$slice", []interface{}{"$data", startIndex}}}},
-			}},
-		}
-
-		result, err := userCollection.Aggregate(ctx, mongo.Pipeline{matchStage, projectStage})
+				{"user_items", bson.D{{"$slice", []interface{}{"$data", startIndex, recordPerPage}}}}}}}
+		result, err := userCollection.Aggregate(ctx, mongo.Pipeline{
+			matchStage, groupStage, projectStage})
+	
 
 		defer cancel()
 
@@ -138,7 +141,7 @@ func SignUp() gin.HandlerFunc {
 		user.Token = &token
 		user.Refresh_Token = &refreshToken
 
-		result , insertErr := orderCollection.InsertOne(ctx, user)
+		result , insertErr := userCollection.InsertOne(ctx, user)
 		if insertErr != nil {
 			msg := fmt.Sprintf("Unable to Insert User Details ")
 			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
